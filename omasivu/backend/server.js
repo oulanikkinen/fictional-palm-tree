@@ -10,15 +10,14 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Connect to a SQLite
+// Connect to a SQLite database using Sequelize
 const sequelize = new Sequelize({
     dialect: 'sqlite',
     storage: './database.db',
-    // and show SQL commands
-    logging: true 
+    logging: true // Print SQL commands
 });
 
-// Define User
+// Define User model
 const User = sequelize.define('User', {
     id: {
         type: DataTypes.INTEGER,
@@ -43,7 +42,7 @@ sequelize.sync()
     .then(() => console.log("Database synchronized"))
     .catch(err => console.error("Error synchronizing database:", err));
 
-// First step of CRUD -> Create a new user
+// Create a new user (Create)
 app.post('/users', async (req, res) => {
     try {
         const { name, email } = req.body;
@@ -57,7 +56,7 @@ app.post('/users', async (req, res) => {
     }
 });
 
-// Second step of CRUD -> Search users
+// Search all users (Read)
 app.get('/users', async (req, res) => {
     try {
         const users = await User.findAll();
@@ -67,7 +66,7 @@ app.get('/users', async (req, res) => {
     }
 });
 
-// Third step of CRUD -> Update user
+// Update user information (Update)
 app.put('/users/:id', async (req, res) => {
     try {
         const { name, email } = req.body;
@@ -88,7 +87,7 @@ app.put('/users/:id', async (req, res) => {
     }
 });
 
-// Final step of CRUD -> Delete user
+// Delete user (Delete)
 app.delete('/users/:id', async (req, res) => {
     try {
         const { id } = req.params;
@@ -103,7 +102,12 @@ app.delete('/users/:id', async (req, res) => {
     }
 });
 
-// Start server
+// Start the server
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
 });
+
+/*
+The required modules can be installed with a single command:
+npm install express sequelize sqlite3 cors
+*/
