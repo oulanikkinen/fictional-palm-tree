@@ -23,7 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 
-# Edit
+# Added project-specific
 package*
 eslint*
-vite*

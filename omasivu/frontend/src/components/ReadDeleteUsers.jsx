@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import React from "react";
+
 
 export default function ReadDeleteUsers({ refresh, buttonClass = "btn btn-danger" }) {
     const [users, setUsers] = useState([]);
@@ -36,9 +38,9 @@ export default function ReadDeleteUsers({ refresh, buttonClass = "btn btn-danger
             {message && <p>{message}</p>}
             <ul>
                 {users.map((user) => (
-                    <li key={user.id}>
+                    <li id={`li-${user.id}`} key={user.id}>
                         User ID: {user.id}, Name: {user.name}, Email: {user.email}
-                        <button onClick={() => handleDelete(user.id)} className={buttonClass}>Delete</button>
+                        <button id={`delete-${user.id}`} onClick={() => handleDelete(user.id)} className={buttonClass}>Delete</button>
                     </li>
                 ))}
             </ul>
